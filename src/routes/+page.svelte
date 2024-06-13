@@ -1,4 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome! 🎉</h1>
 
-<a href="/reviews-over-time/">Reviews over time</a>
+<ul>
+	<li><a href="/movies/">Browse a list of movies</a></li>
+	<li><a href="/reviews-over-time/">Top rated movies per year</a></li>
+</ul>
