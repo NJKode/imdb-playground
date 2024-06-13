@@ -58,3 +58,4 @@ I chose to host this site on Vercel. In Vercel's configuration for this project,
 * More styles. Currently it's the bare minimym.
 * Proper reusable nav bar. So far the links on the site have just been hard coded.
 * There needs to be a lot more data pruning. I think there was a bug in the db generation script that did not properly filter out null/empty values. I fixed the script just before release, but did not get around to updating the database.
+* Adding a trend-line to the movies-per-year graph. I was hoping to see if movies where getting rated higher over time. It would probably be more useful to compare the average of the top-n rated movies each year.
