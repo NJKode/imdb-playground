@@ -7,7 +7,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"generate-db": "node db/generate.js"
 	},
 	"devDependencies": {
 		"@sqlitecloud/drivers": "^1.0.122",
@@ -16,6 +17,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"chart.js": "^4.4.3",
+		"csv": "^6.3.9",
 		"globals": "^15.4.0",
 		"prettier": "^3.3.2",
 		"svelte": "^4.2.7",
