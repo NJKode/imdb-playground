@@ -4,7 +4,7 @@ This playground is built and hosted on Vercel:
 [https://imdb-playground.vercel.app](https://imdb-playground.vercel.app)
 
 ## Building
-To download the tsv files and generate the database, run
+To download the tsv files and generate the database, run:
 ```
 npm run db-generate
 ```
@@ -23,6 +23,7 @@ However, I wanted to experiment with Node's stream API, as I figured it would be
 I then used a shell script to create a SQLite Database, and generate the records using the newly-imported TSV files.
 
 > **Why NodeJS?**
+>
 > I mostly chose node because of familiarity! I knew I could whip something up fairly quickly. This entire step could have been a shell script but I didn't wan't to play around with that power. It also probably would have been easier to write this in Python, as the language is well equipped at doing large-scale repeated transformations, such as processing tsv files.
 
 
@@ -38,6 +39,7 @@ I decided to create the site using SvelteKit.
 On relevant pages, the svelte server runs the SQL Query and returns the records. I then pass these records to the page template, which I then format and print on the page (e.g. as a chart or table). The API key for accessing the database is stored in an environment variable, so can be obscured on the hosting side.
 
 > **Why SvelteKit?**
+>
 > Svelte is my front-end framework of choice, because *it just works*<sup>TM</sup>. It feels fairly close to vanilla JS but with a lot of sugar to make rendering components nice.
 >SvelteKit also makes it easy to spin up static or dynamic sites by providing the server framework for you.
 
@@ -47,6 +49,7 @@ Because I was hosting the databse remotely, I would need to run the website on a
 I chose to host this site on Vercel. In Vercel's configuration for this project, I set the environment variable for the API key. This gave the server access to the database, while obscuring the key from the front-end.
 
 > **Why Vercel?**
+>
 > Mostly just because I knew that I could do what I needed for free :)
 
 ## Future considerations
