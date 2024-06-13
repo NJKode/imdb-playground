@@ -52,5 +52,6 @@ I chose to host this site on Vercel. In Vercel's configuration for this project,
 ## Future considerations
 * Adding pagination to the table browser
 * Loading states for each page. There is a brief period of time where the query is being sent to the DB host. It would be good to add loading spinners, or disable the forms so that there is some feedback to the user.
-* More styles
+* More styles. Currently it's the bare minimym.
 * Proper reusable nav bar. So far the links on the site have just been hard coded.
+* There needs to be a lot more data pruning. I think there was a bug in the db generation script that did not properly filter out null/empty values. I fixed the script just before release, but did not get around to updating the database.
