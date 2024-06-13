@@ -7,6 +7,17 @@ import { transform } from 'stream-transform';
 import { stringify } from 'csv-stringify';
 import { cleanTitleRow } from './lib/transformers.js'
 
+// "https://datasets.imdbws.com/name.basics.tsv.gz",
+//  "https://datasets.imdbws.com/title.akas.tsv.gz",
+// 'https://datasets.imdbws.com/title.basics.tsv.gz',
+//  "https://datasets.imdbws.com/title.crew.tsv.gz",
+//  "https://datasets.imdbws.com/title.episode.tsv.gz",
+//  "https://datasets.imdbws.com/title.principals.tsv.gz",
+// 'https://datasets.imdbws.com/title.ratings.tsv.gz',
+
+
+// I added this object as I had intended to parse/process more of the tables,
+// thus possibly needing a transformation function per table
 const tableInfo = {
 	titles: {
 		url: 'https://datasets.imdbws.com/title.basics.tsv.gz',
@@ -16,14 +27,6 @@ const tableInfo = {
 		url: 'https://datasets.imdbws.com/title.ratings.tsv.gz',
 	},
 };
-
-// "https://datasets.imdbws.com/name.basics.tsv.gz",
-//   "https://datasets.imdbws.com/title.akas.tsv.gz",
-// 'https://datasets.imdbws.com/title.basics.tsv.gz',
-//   "https://datasets.imdbws.com/title.crew.tsv.gz",
-//   "https://datasets.imdbws.com/title.episode.tsv.gz",
-//   "https://datasets.imdbws.com/title.principals.tsv.gz",
-// 'https://datasets.imdbws.com/title.ratings.tsv.gz',
 
 const fetchData = (url) => {
 	return fetch(url, {
@@ -36,12 +39,15 @@ const fetchData = (url) => {
 const processData = async () => {
 	const processes = Object.entries(tableInfo).map(([tableName, { url, transformFunction }]) => {
 		return new Promise((resolve, reject) => {
+			// This might fail if the folder doesnt exist, woops.
+			// needs a fs.stat -> fs.mkdir
 			const fileName = `db/data/${tableName}.tsv`;
 			const writeStream = createWriteStream(fileName);
 			writeStream.on('finish', () => {
 				console.log(`Processed ${tableName}`);
 				resolve();
 			});
+			// Ensure the file is created before running by listening for the 'open' event
 			writeStream.on('open', () => {
 				fetchData(url)
 				.then((response) => {
@@ -59,6 +65,7 @@ const processData = async () => {
 						delimiter: '\t',
 					});
 
+					// ye olde pipe
 					response.body
 						?.pipe(createGunzip())
 						.pipe(parser)
@@ -73,11 +80,13 @@ const processData = async () => {
 			})
 		});
 	});
+
+	// Run this 'asynchrously', and retun when all of the promises are fulfilled
 	await Promise.all(processes);
 };
 
 (async function main(...args) {
-	// await processData();
+	await processData();
 	exec('sh db/db-generate.sh', (error, stdout, stderr) => {
 		console.log(stdout);
 		console.log(stderr);
